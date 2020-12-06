@@ -13,27 +13,63 @@ package com.upgrad.ublog.dtos;
  */
 
 public class User {
+    private int userId;
+    private String emailId;
+    private String password;
 
-//    @Override
-//    public String toString() {
-//        return "User{" +
-//                "userId=" + userId +
-//                ", emailId='" + emailId + '\'' +
-//                ", password='" + password + '\'' +
-//                '}';
-//    }
+    public User(){
 
-//    public static void main(String[] args) {
-//        User user = new User();
-//        user.setUserId(1);
-//        user.setEmailId("dummy@dummy.com");
-//        user.setPassword("password");
-//
-//        System.out.println(user);
-//
+    }
+
+    public User(int useId, String emailId, String password) {
+        this.userId = useId;
+        this.emailId = emailId;
+        this.password = password;
+    }
+
+    public int getUseId() {
+        return userId;
+    }
+
+    public String getEmailId() {
+        return emailId;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setUserId(int useId) {
+        this.userId = useId;
+    }
+
+    public void setEmailId(String emailId) {
+        this.emailId = emailId;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId=" + userId +
+                ", emailId='" + emailId + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
+
+    public static void main(String[] args) {
+        User user = new User();
+        user.setUserId(1);
+        user.setEmailId("dummy@dummy.com");
+        user.setPassword("password");
+
+        System.out.println(user);
+
 //        /**
 //         * Your output should be similar to this.
 //         * User{userId=1, emailId='dummy@dummy.com', password='password'}
 //         */
-//    }
+    }
 }
