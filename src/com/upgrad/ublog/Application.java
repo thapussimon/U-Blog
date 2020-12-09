@@ -6,6 +6,7 @@ import com.upgrad.ublog.exceptions.PostNotFoundException;
 import com.upgrad.ublog.services.PostService;
 import com.upgrad.ublog.services.ServiceFactory;
 import com.upgrad.ublog.services.UserService;
+import com.upgrad.ublog.services.UserServiceImpl;
 import com.upgrad.ublog.utils.DateTimeFormatter;
 import com.upgrad.ublog.utils.LogWriter;
 
@@ -16,9 +17,14 @@ import java.util.Scanner;
 
 public class Application {
     private Scanner scanner;
+    ServiceFactory serviceFactory=new ServiceFactory();
 
+    //Need to implement singleton pattern in PostServiceImpl then update in ServiceFactory Class
+    //Need fixes here
     private PostService postService;
-    private UserService userService;
+
+    //userService using ServiceFactory
+    private UserService userService=serviceFactory.getUserServiceImpl();
 
     private boolean isLoggedIn;
     private String loggedInEmailId;
@@ -75,7 +81,7 @@ public class Application {
      *  a single catch block which handles all exceptions using the Exception class and print the
      *  exception message using the getMessage() method.
      */
-    private void login() {
+    private void login()  {
         if (isLoggedIn) {
             System.out.println("You are already logged in.");
             return;
@@ -84,6 +90,16 @@ public class Application {
         System.out.println("*********************");
         System.out.println("********Login********");
         System.out.println("*********************");
+
+        User user=new User();
+        try{
+            userService.login(user);
+            System.out.println("You are logged in");
+            isLoggedIn=true;
+            loggedInEmailId=user.getEmailId();
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
 
 
     }
@@ -107,6 +123,17 @@ public class Application {
         System.out.println("*********************");
         System.out.println("******Register*******");
         System.out.println("*********************");
+
+        User user=new User();
+        try{
+            userService.register(user);
+            System.out.println("You are logged in");
+            isLoggedIn=true;
+            loggedInEmailId=user.getEmailId();
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+
 
 
     }
@@ -151,6 +178,22 @@ public class Application {
         System.out.println("*********************");
         System.out.println("*****Create Post*****");
         System.out.println("*********************");
+
+        Post post=new Post();
+        int postId=1;
+        String emailId=loggedInEmailId;
+        LocalDateTime timestamp=LocalDateTime.now();
+        String tag,title,description;
+        try{
+            tag=scanner.nextLine();
+            title=scanner.nextLine();
+            description=scanner.nextLine();
+
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+
+
 
 
     }

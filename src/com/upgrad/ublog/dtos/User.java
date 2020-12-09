@@ -21,13 +21,13 @@ public class User {
 
     }
 
-    public User(int useId, String emailId, String password) {
-        this.userId = useId;
+    public User(int userId, String emailId, String password) {
+        this.userId = userId;
         this.emailId = emailId;
         this.password = password;
     }
 
-    public int getUseId() {
+    public int getUserId() {
         return userId;
     }
 
@@ -39,8 +39,8 @@ public class User {
         return password;
     }
 
-    public void setUserId(int useId) {
-        this.userId = useId;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public void setEmailId(String emailId) {
