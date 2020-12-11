@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface PostDAO {
     public Post create(Post post) throws SQLException, ClassNotFoundException;
-    public List<Post> findByEmailId(String emailId) throws SQLException;
+    public List<Post> findByEmailId(String emailId) throws SQLException, ClassNotFoundException;
     public List<Post> findByTag(String tag) throws SQLException;
     public Post findByPostId(int postId) throws SQLException;
     public List<String> findAllTags() throws SQLException;
