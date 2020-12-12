@@ -12,6 +12,8 @@ import com.upgrad.ublog.utils.LogWriter;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -208,7 +210,7 @@ public class Application {
      *  a single catch block which handles all exceptions using the Exception class and print the
      *  exception message using the getMessage() method.
      */
-    private void searchPost() {
+    private void searchPost()  {
         if (!isLoggedIn) {
             System.out.println("You are not logged in.");
             return;
@@ -218,6 +220,17 @@ public class Application {
         System.out.println("*****Search Post*****");
         System.out.println("*********************");
 
+        System.out.print("Email ID: ");
+        String email;
+        List<Post> temp;
+        try{
+            email=scanner.nextLine();
+            temp=postService.getPostsByEmailId(email);
+        }catch (PostNotFoundException e){
+            System.out.println("Sorry no posts exists for this email id");
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
 
 
     }
