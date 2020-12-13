@@ -38,6 +38,30 @@ package com.upgrad.ublog.dao;
  * TODO: 4.5. Implement the findByPostId() method which takes post id as an input argument and return the
  * post details from the database. If no post exists for the given id, then return a Post object
  * without setting any of its attributes.
+ * <p>
+ * TODO: 4.1. Implement findByEmailId() method which takes email id as an input parameter and
+ * returns all the posts corresponding to the email id from the Post table defined
+ * in the database.
+ * <p>
+ * TODO: 4.4. Implement the deleteByPostId() method which takes post id as an input argument and delete
+ * the corresponding post from the database. If the post was deleted successfully, then return true,
+ * otherwise, return false. (Hint: The executeUpdate() method returns the count of rows affected by the
+ * query.)
+ * TODO: 4.5. Implement the findByPostId() method which takes post id as an input argument and return the
+ * post details from the database. If no post exists for the given id, then return a Post object
+ * without setting any of its attributes.
+ * <p>
+ * TODO: 4.1. Implement findByEmailId() method which takes email id as an input parameter and
+ * returns all the posts corresponding to the email id from the Post table defined
+ * in the database.
+ * <p>
+ * TODO: 4.4. Implement the deleteByPostId() method which takes post id as an input argument and delete
+ * the corresponding post from the database. If the post was deleted successfully, then return true,
+ * otherwise, return false. (Hint: The executeUpdate() method returns the count of rows affected by the
+ * query.)
+ * TODO: 4.5. Implement the findByPostId() method which takes post id as an input argument and return the
+ * post details from the database. If no post exists for the given id, then return a Post object
+ * without setting any of its attributes.
  */
 
 /**
@@ -59,13 +83,13 @@ package com.upgrad.ublog.dao;
 import com.upgrad.ublog.db.Database;
 import com.upgrad.ublog.dtos.Post;
 
-import javax.xml.crypto.Data;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -130,17 +154,35 @@ public class PostDAOImpl implements PostDAO {
     }
 
     @Override
-    public List<Post> findByTag(String tag) throws SQLException {
-        return null;
+    public List<Post> findByTag(String tag) throws SQLException, ClassNotFoundException {
+        Connection connection = Database.getConnection();
+        Statement statement = connection.createStatement();
+        String findQuery = "SELECT * FROM post WHERE tag =" + tag;
+
+        List<Post> tempList = new ArrayList<>();
+        ResultSet resultSet = statement.executeQuery(findQuery);
+        if (resultSet.next()) {
+            Post post = new Post();
+            post.setPostId(resultSet.getInt("postId"));
+            post.setEmailId(resultSet.getString("emailId"));
+            post.setTag(resultSet.getString("tag"));
+            post.setTitle(resultSet.getString("title"));
+            post.setDescription(resultSet.getString("description"));
+            post.setTimestamp(LocalDateTime.parse(resultSet.getString("timestamp")));
+            tempList.add(post);
+
+        }
+        return tempList;
+
     }
 
     @Override
-    public Post findByPostId(int postId) throws SQLException,ClassNotFoundException {
-        Connection connection= Database.getConnection();
-        Statement statement= connection.createStatement();
-        String findQuery="SELECT * FROM post WHERE postId = "+postId;
-        ResultSet resultSet=statement.executeQuery(findQuery);
-        Post post=new Post();
+    public Post findByPostId(int postId) throws SQLException, ClassNotFoundException {
+        Connection connection = Database.getConnection();
+        Statement statement = connection.createStatement();
+        String findQuery = "SELECT * FROM post WHERE postId = " + postId;
+        ResultSet resultSet = statement.executeQuery(findQuery);
+        Post post = new Post();
         if (resultSet.next()) {
             post.setPostId(resultSet.getInt("postId"));
             post.setEmailId(resultSet.getString("emailId"));
@@ -157,23 +199,35 @@ public class PostDAOImpl implements PostDAO {
     }
 
     @Override
-    public List<String> findAllTags() throws SQLException {
-        return null;
+    public List<String> findAllTags() throws SQLException, ClassNotFoundException {
+        Connection connection = Database.getConnection();
+        Statement statement = connection.createStatement();
+        String findQuery = "SELECT tag FROM post";
+        ResultSet resultSet = statement.executeQuery(findQuery);
+
+        //To store the tags
+        List<String> temp = new ArrayList<>();
+
+        while (resultSet.next()) {
+
+            temp.add(resultSet.getString("tag"));
+        }
+        return temp;
     }
 
     @Override
     public boolean deleteByPostId(int postId) throws SQLException, ClassNotFoundException {
         Connection connection = Database.getConnection();
-        Statement statement= connection.createStatement();
-        String deleteQuery="DELETE FROM post WHERE postId = "+postId;
+        Statement statement = connection.createStatement();
+        String deleteQuery = "DELETE FROM post WHERE postId = " + postId;
 
         //The executeUpdate() method returns the count of rows affected by the query.
         //If count is zero no rows are affected hence return false
         //If count is greater than zero rows are affected hence return true
-        int c=statement.executeUpdate(deleteQuery);
-        if (c>0){
+        int c = statement.executeUpdate(deleteQuery);
+        if (c > 0) {
             return true;
-        }else {
+        } else {
             return false;
         }
     }
