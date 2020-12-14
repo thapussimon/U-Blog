@@ -12,10 +12,7 @@ import com.upgrad.ublog.utils.LogWriter;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Application {
     private Scanner scanner;
@@ -39,7 +36,7 @@ public class Application {
         loggedInEmailId = null;
     }
 
-    private void start() {
+    private void start()  {
         boolean flag = true;
 
         System.out.println("*********************");
@@ -295,6 +292,29 @@ public class Application {
         System.out.println("*****Filter Post*****");
         System.out.println("*********************");
 
+        Set<String> set;//To store the getAllTags
+        List<Post> list=null;//To store getPostsByTag
+        System.out.print("Enter tag: ");
+        String tag=scanner.nextLine();
+        try{
+            set=postService.getAllTags();
+            list=postService.getPostsByTag(tag);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+
+        if (list==null){
+            try {
+                throw new PostNotFoundException("Sorry no posts exists for this tag");
+            } catch (PostNotFoundException e) {
+                e.printStackTrace();
+            }
+        }else {
+            for (Post post : list) {
+                System.out.println(post);
+            }
+        }
+
 
     }
 
@@ -311,7 +331,7 @@ public class Application {
     /**
      * TODO 3.16. Instantiate the userService and the postService variables using the ServiceFactory.
      */
-    public static void main(String[] args) {
+    public static void main(String[] args)  {
         ServiceFactory serviceFactory = new ServiceFactory();
         UserService userService = null;
         PostService postService = null;
