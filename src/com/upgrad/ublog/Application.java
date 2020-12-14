@@ -333,8 +333,8 @@ public class Application {
      */
     public static void main(String[] args)  {
         ServiceFactory serviceFactory = new ServiceFactory();
-        UserService userService = null;
-        PostService postService = null;
+        UserService userService = serviceFactory.getUserServiceImpl();
+        PostService postService = serviceFactory.getPostServiceImple();
         Application application = new Application(postService, userService);
         application.start();
     }

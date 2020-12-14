@@ -155,7 +155,9 @@ import com.upgrad.ublog.dao.DAOFactory;
 import com.upgrad.ublog.dao.PostDAO;
 import com.upgrad.ublog.dtos.Post;
 import com.upgrad.ublog.exceptions.PostNotFoundException;
+import com.upgrad.ublog.utils.LogWriter;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
@@ -193,6 +195,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public Post create(Post post) throws Exception {
+        LogWriter.writeLog("Executing create for PostServiceImpl","");
         Post temp = null;
         try {
             temp = postDAO.create(post);
@@ -204,6 +207,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<Post> getPostsByEmailId(String emailId) throws Exception {
+        LogWriter.writeLog("Executing getPostsByEmailId for PostServiceImpl","");
         List<Post> temp;
         try {
             temp = postDAO.findByEmailId(emailId);
@@ -217,6 +221,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<Post> getPostsByTag(String tag)throws Exception{
+        LogWriter.writeLog("Executing getPostsByTag for PostServiceImpl","");
         List<Post> temp=null;
         try{
             temp=postDAO.findByTag(tag);
@@ -228,6 +233,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public Set<String> getAllTags() throws Exception {
+        LogWriter.writeLog("Executing getAllTags for PostServiceImpl","");
         Set<String> temp;
         try{
             temp= (Set<String>) postDAO.findAllTags();
@@ -238,7 +244,8 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public boolean deletePost(int postId, String emailId) throws PostNotFoundException, SQLException, ClassNotFoundException {
+    public boolean deletePost(int postId, String emailId) throws PostNotFoundException, SQLException, ClassNotFoundException, IOException {
+        LogWriter.writeLog("Executing deletePost for PostServiceImpl","");
         Post post = new Post(); //for getting post object for postId
         Post temp = null; //for getting post object for emailId
         try {

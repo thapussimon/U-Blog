@@ -2,8 +2,10 @@ package com.upgrad.ublog.dao;
 
 import com.upgrad.ublog.db.Database;
 import com.upgrad.ublog.dtos.User;
+import com.upgrad.ublog.utils.LogWriter;
 
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -38,10 +40,11 @@ public class UserDAOImpl implements UserDAO {
         return instance;
     }
     @Override
-    public User create(User user) throws SQLException, ClassNotFoundException {
+    public User create(User user) throws SQLException, ClassNotFoundException, IOException {
         Connection connection= Database.getConnection();
 
         Statement statement= connection.createStatement();
+        LogWriter.writeLog("Executing create() for UserDAOImpl","");
         statement.executeUpdate("use ublog");
 
         String insertQuery="INSERT INTO user (userId,emailId,password) VALUES (" +
@@ -56,9 +59,10 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public User findByEmailId(String emailId) throws SQLException, ClassNotFoundException {
+    public User findByEmailId(String emailId) throws SQLException, ClassNotFoundException, IOException {
         Connection connection= Database.getConnection();
         Statement statement= connection.createStatement();
+        LogWriter.writeLog("Executing findByEmailId for UserDAOImpl","");
         statement.executeUpdate("use ublog");
         String selectQuery="SELECT * FROM user WHERE emailId="+emailId;
         ResultSet resultSet=statement.executeQuery(selectQuery);

@@ -6,7 +6,9 @@ import com.upgrad.ublog.dtos.User;
 import com.upgrad.ublog.exceptions.IncorrectPasswordException;
 import com.upgrad.ublog.exceptions.UserAlreadyRegisteredException;
 import com.upgrad.ublog.exceptions.UserNotFoundException;
+import com.upgrad.ublog.utils.LogWriter;
 
+import java.io.IOException;
 import java.sql.SQLException;
 
 /**
@@ -59,7 +61,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean login(User user) throws UserNotFoundException, IncorrectPasswordException, SQLException, ClassNotFoundException {
+    public boolean login(User user) throws UserNotFoundException, IncorrectPasswordException, SQLException, ClassNotFoundException, IOException {
+        LogWriter.writeLog("Executing login for UserServiceImpl","");
         if (user==null){
             throw new NullPointerException("User Object is NULL");
         }
@@ -80,7 +83,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean register(User user) throws ClassNotFoundException, UserAlreadyRegisteredException, SQLException {
+    public boolean register(User user) throws ClassNotFoundException, UserAlreadyRegisteredException, SQLException, IOException {
+        LogWriter.writeLog("Executing register for UserServiceImpl","");
         if (user==null){
             throw new NullPointerException("User Object is NULL");
         }

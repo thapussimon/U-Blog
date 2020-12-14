@@ -82,7 +82,9 @@ package com.upgrad.ublog.dao;
 
 import com.upgrad.ublog.db.Database;
 import com.upgrad.ublog.dtos.Post;
+import com.upgrad.ublog.utils.LogWriter;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -117,9 +119,10 @@ public class PostDAOImpl implements PostDAO {
 
 
     @Override
-    public Post create(Post post) throws SQLException, ClassNotFoundException {
+    public Post create(Post post) throws SQLException, ClassNotFoundException, IOException {
         Connection connection = Database.getConnection();
         Statement statement = connection.createStatement();
+        LogWriter.writeLog("Executing create for PostDAOImpl","");
         String sql = "INSERT INTO post (postId,emailId,tag,title,description,timestamp) VALUES (" +
                 post.getEmailId() + ", '" +
                 post.getEmailId() + "', '" +
@@ -131,10 +134,11 @@ public class PostDAOImpl implements PostDAO {
     }
 
     @Override
-    public List<Post> findByEmailId(String emailId) throws SQLException, ClassNotFoundException {
+    public List<Post> findByEmailId(String emailId) throws SQLException, ClassNotFoundException, IOException {
         List<Post> temp = new ArrayList<>();
         Connection connection = Database.getConnection();
         Statement statement = connection.createStatement();
+        LogWriter.writeLog("Executing findByEmail for PostDAOImpl","");
         String sql = "SELECT * FROM post WHERE emailId =" + emailId;
         ResultSet resultSet = statement.executeQuery(sql);
         if (resultSet.next()) {
@@ -154,9 +158,10 @@ public class PostDAOImpl implements PostDAO {
     }
 
     @Override
-    public List<Post> findByTag(String tag) throws SQLException, ClassNotFoundException {
+    public List<Post> findByTag(String tag) throws SQLException, ClassNotFoundException, IOException {
         Connection connection = Database.getConnection();
         Statement statement = connection.createStatement();
+        LogWriter.writeLog("Executing findByTag for PostDAOImpl","");
         String findQuery = "SELECT * FROM post WHERE tag =" + tag;
 
         List<Post> tempList = new ArrayList<>();
@@ -177,9 +182,10 @@ public class PostDAOImpl implements PostDAO {
     }
 
     @Override
-    public Post findByPostId(int postId) throws SQLException, ClassNotFoundException {
+    public Post findByPostId(int postId) throws SQLException, ClassNotFoundException, IOException {
         Connection connection = Database.getConnection();
         Statement statement = connection.createStatement();
+        LogWriter.writeLog("Executing findByPostId for PostDAOImpl","");
         String findQuery = "SELECT * FROM post WHERE postId = " + postId;
         ResultSet resultSet = statement.executeQuery(findQuery);
         Post post = new Post();
@@ -199,9 +205,10 @@ public class PostDAOImpl implements PostDAO {
     }
 
     @Override
-    public List<String> findAllTags() throws SQLException, ClassNotFoundException {
+    public List<String> findAllTags() throws SQLException, ClassNotFoundException, IOException {
         Connection connection = Database.getConnection();
         Statement statement = connection.createStatement();
+        LogWriter.writeLog("Executing findAllTags for PostDAOImpl","");
         String findQuery = "SELECT tag FROM post";
         ResultSet resultSet = statement.executeQuery(findQuery);
 
@@ -216,9 +223,10 @@ public class PostDAOImpl implements PostDAO {
     }
 
     @Override
-    public boolean deleteByPostId(int postId) throws SQLException, ClassNotFoundException {
+    public boolean deleteByPostId(int postId) throws SQLException, ClassNotFoundException, IOException {
         Connection connection = Database.getConnection();
         Statement statement = connection.createStatement();
+        LogWriter.writeLog("Executing deleteByPostId for PostDAOImpl","");
         String deleteQuery = "DELETE FROM post WHERE postId = " + postId;
 
         //The executeUpdate() method returns the count of rows affected by the query.
