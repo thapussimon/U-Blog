@@ -88,16 +88,16 @@ public class UserServiceImpl implements UserService {
         if (user==null){
             throw new NullPointerException("User Object is NULL");
         }
-        User temp=null;
+
         try{
-            temp=userDAO.findByEmailId(user.getEmailId());
+            user=userDAO.findByEmailId(user.getEmailId());
         }catch (SQLException e){
             System.out.println("Some unexpected error occurred!");
         }
-        if (temp!=null){
+        if (userDAO.findByEmailId(user.getEmailId()).equals(user)){
             throw new UserAlreadyRegisteredException("A user with this email address already exists!");
         }else{
-            userDAO.create(temp);
+            userDAO.create(user);
             return true;
         }
 

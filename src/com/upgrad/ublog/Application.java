@@ -124,13 +124,25 @@ public class Application {
         System.out.println("*********************");
 
         User user=new User();
+        boolean check=false;
+        String email;
+        String pw;
+        System.out.println("Enter Email ID: ");
+        email=scanner.nextLine();
+        user.setEmailId(email);
+        System.out.println("Enter password: ");
+        pw=scanner.nextLine();
+        user.setPassword(pw);
         try{
-            userService.register(user);
+            check=userService.register(user);
+
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        if (check){
             System.out.println("You are logged in");
             isLoggedIn=true;
             loggedInEmailId=user.getEmailId();
-        }catch (Exception e){
-            System.out.println(e.getMessage());
         }
 
 

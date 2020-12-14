@@ -66,8 +66,8 @@ public class UserDAOImpl implements UserDAO {
         statement.executeUpdate("use ublog");
         String selectQuery="SELECT * FROM user WHERE emailId="+emailId;
         ResultSet resultSet=statement.executeQuery(selectQuery);
+        User user=new User();
         if (resultSet.next()){
-            User user=new User();
             user.setUserId(resultSet.getInt("userId"));
             user.setEmailId(resultSet.getString("emailId"));
             user.setPassword(resultSet.getString("password"));
