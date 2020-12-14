@@ -157,6 +157,7 @@ import com.upgrad.ublog.dtos.Post;
 import com.upgrad.ublog.exceptions.PostNotFoundException;
 
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -215,13 +216,25 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<Post> getPostsByTag(String tag) throws Exception {
-        return null;
+    public List<Post> getPostsByTag(String tag)throws Exception{
+        List<Post> temp=null;
+        try{
+            temp=postDAO.findByTag(tag);
+        }catch (Exception e){
+            throw new Exception( "Some unexpected error occurred!");
+        }
+        return temp;
     }
 
     @Override
     public Set<String> getAllTags() throws Exception {
-        return null;
+        Set<String> temp;
+        try{
+            temp= (Set<String>) postDAO.findAllTags();
+        }catch (Exception e){
+            throw new Exception( "Some unexpected error occurred!");
+        }
+        return temp;
     }
 
     @Override
