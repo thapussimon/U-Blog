@@ -307,7 +307,7 @@ public class Application {
             try {
                 throw new PostNotFoundException("Sorry no posts exists for this tag");
             } catch (PostNotFoundException e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());
             }
         }else {
             for (Post post : list) {

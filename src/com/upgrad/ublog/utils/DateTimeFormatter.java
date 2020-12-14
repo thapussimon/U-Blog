@@ -2,6 +2,7 @@ package com.upgrad.ublog.utils;
 
 import java.time.LocalDateTime;
 
+
 /**
  * TODO: 4.13. Implement a method with the following signature.
  *  public static String format(LocalDateTime localDateTime)
@@ -9,5 +10,10 @@ import java.time.LocalDateTime;
  */
 
 public class DateTimeFormatter {
+    public static  String format(LocalDateTime localDateTime){
+        localDateTime=LocalDateTime.now();
+        return localDateTime.format(java.time.format.DateTimeFormatter.ofPattern("dd-MM-yy HH:mm:ss"));
+
+    }
 
 }
